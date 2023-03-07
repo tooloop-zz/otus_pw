@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Список заявок</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+<div th:insert="menu::menu"/>
+<div class="container">
+    <div class="page-header">
+        <h3>Список заявок</h3>
+    </div>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th scope="col">UUID</th>
+            <th scope="col">Имя</th>
+            <th scope="col">Сумма</th>
+            <th scope="col">Одобренная ставка</th>
+            <th scope="col">Статус</th>
+            <th scope="col">Создана</th>
+            <th scope="col">Обновлена</th>
+            <th scope="col">Действия</th>
+        </tr>
+        </thead>
+        <tbody>
+    </table>
+</div>
+<script>
+    $(function () {
+        $.get('/api/restricted/requests').done(function (requests) {
+            requests.forEach(function (request) {
+                $('tbody').append(`
+                    <tr>
+                        <td>${request.id}</td>
+                        <td>${request.uuid}</td>
+                        <td>${request.name}</td>
+                        <td>${request.sum}</td>
+                        <td>${request.percentageRate}</td>
+                        <td>${request.state}</td>
+                        <td>${request.created}</td>
+                        <td>${request.updated}</td>
+                        <td>
+                        <div class="btn-group" role="group" aria-label="...">
+                        <a href="/read?id=${request.id}" class="btn btn-default">Открыть</a>
+                        </div>
+                        </td>
+                    </tr>
+                `)
+            });
+        })
+    });
+</script>
+</body>
+</html>

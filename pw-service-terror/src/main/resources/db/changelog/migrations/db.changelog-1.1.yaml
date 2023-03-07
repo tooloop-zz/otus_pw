@@ -1,0 +1,38 @@
+databaseChangeLog:
+  - changeSet:
+      id: create tables
+      author: asamofalov
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: terrorist_pkey
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  startWith: 1
+                  incrementBy: 1
+              - column:
+                  name: doc_series
+                  type: CHAR(4)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: doc_number
+                  type: CHAR(6)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: doc_date
+                  type: DATE
+                  constraints:
+                    nullable: false
+              - column:
+                  name: name
+                  type: VARCHAR(300)
+                  constraints:
+                    nullable: false
+            tableName: terrorists
