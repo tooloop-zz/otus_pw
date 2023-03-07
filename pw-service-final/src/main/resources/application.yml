@@ -1,0 +1,4 @@
+percentage_rate_min: 15
+percentage_rate_max: 30
+logging:
+  config: classpath:logback.xml

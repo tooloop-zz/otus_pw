@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Просмотр заявки</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+<div th:insert="menu::menu"/>
+<div class="container">
+    <div class="page-header">
+        <h3>Просмотр заявки</h3>
+    </div>
+    <div class="form-group">
+        <label for="id">ID:</label>
+        <input type="text" class="form-control" id="id">
+    </div>
+    <div class="form-group">
+        <label for="uuid">UUID:</label>
+        <input type="text" class="form-control" id="uuid">
+    </div>
+    <div class="form-group">
+        <label for="name">Имя:</label>
+        <input type="text" class="form-control" id="name">
+    </div>
+    <div class="form-group">
+        <label for="docSeries">Серия паспорта:</label>
+        <input type="text" class="form-control" id="docSeries">
+    </div>
+    <div class="form-group">
+        <label for="docNumber">Номер паспорта:</label>
+        <input type="text" class="form-control" id="docNumber">
+    </div>
+    <div class="form-group">
+        <label for="docDate">Дата выдачи:</label>
+        <input type="text" class="form-control" id="docDate">
+    </div>
+    <div class="form-group">
+        <label for="sum">Сумма кредита:</label>
+        <input type="text" class="form-control" id="sum">
+    </div>
+    <div class="form-group">
+        <label for="percentageRate">Одобренная ставка:</label>
+        <input type="text" class="form-control" id="percentageRate">
+    </div>
+    <div class="form-group">
+        <label for="state">Текущий статус:</label>
+        <input type="text" class="form-control" id="state">
+    </div>
+    <div class="form-group">
+        <label for="created">Создана:</label>
+        <input type="text" class="form-control" id="created">
+    </div>
+    <div class="form-group">
+        <label for="updated">Обновлена:</label>
+        <input type="text" class="form-control" id="updated">
+    </div>
+
+    <div class="page-header">
+        <h3>История обработки</h3>
+    </div>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Cтатус</th>
+            <th>Время обработки</th>
+        </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+
+    <a href="list.html" th:href="@{/}">
+        <button type="button" class="btn btn-default">Закрыть</button>
+    </a>
+</div>
+<script th:inline="javascript">
+    $(function () {
+        $.get('/api/restricted/requests/[[${id}]]').done(function (request) {
+            $('[id="id"]').val(`${request.id}`);
+            $('[id="uuid"]').val(`${request.uuid}`);
+            $('[id="name"]').val(`${request.name}`);
+            $('[id="docSeries"]').val(`${request.docSeries}`);
+            $('[id="docNumber"]').val(`${request.docNumber}`);
+            $('[id="docDate"]').val(`${request.docDate}`);
+            $('[id="sum"]').val(`${request.sum}`);
+            $('[id="percentageRate"]').val(`${request.percentageRate}`);
+            $('[id="state"]').val(`${request.state}`);
+            $('[id="created"]').val(`${request.created}`);
+            $('[id="updated"]').val(`${request.updated}`);
+            var tab = $('tbody');
+            request.history.forEach(function (item) {
+                tab.append(`
+                    <tr>
+                        <td>${item.state}</td>
+                        <td>${item.updated}</td>
+                    </tr>
+                `)
+            });
+        })
+    });
+</script>
+</body>
+</html>

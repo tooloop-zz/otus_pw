@@ -1,0 +1,89 @@
+databaseChangeLog:
+  - changeSet:
+      id: create tables
+      author: asamofalov
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: credit_request_pkey
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  startWith: 1
+                  incrementBy: 1
+              - column:
+                  name: uuid
+                  type: UUID
+                  constraints:
+                    nullable: false
+              - column:
+                  name: name
+                  type: VARCHAR(200)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: doc_series
+                  type: CHAR(4)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: doc_number
+                  type: CHAR(6)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: doc_date
+                  type: DATE
+                  constraints:
+                    nullable: false
+              - column:
+                  name: state
+                  type: VARCHAR(30)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: sum
+                  type: double
+              - column:
+                  name: percentage_rate
+                  type: double
+              - column:
+                  name: created
+                  type: DATETIME
+              - column:
+                  name: updated
+                  type: DATETIME
+            tableName: credit_requests
+        - createTable:
+            columns:
+              - column:
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: history_pkey
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  startWith: 1
+                  incrementBy: 1
+              - column:
+                  name: state
+                  type: VARCHAR(30)
+                  constraints:
+                    nullable: false
+                    unique: false
+              - column:
+                  name: updated
+                  type: DATETIME
+              - column:
+                  name: credit_request_id
+                  type: bigint
+                  constraints:
+                    nullable: true
+                    foreignKeyName: fk_credit_request_id
+                    references: credit_requests(id)
+            tableName: credit_requests_history
